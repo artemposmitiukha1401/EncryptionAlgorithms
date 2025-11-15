@@ -129,6 +129,15 @@ function CheckTextToAnyLatter(text) {
   return false;
 }
 
+function FillTextRow(box, text) {
+  box.innerHTML = "";
+  for (let i = 0; i < text.length; i++) {
+    let fr = document.createElement("p");
+    fr.textContent = (text[i] === " " ? "␣" : text[i]);
+    box.appendChild(fr);
+  }
+}
+
 let textToEncrypt = document.getElementById("text-to-encrypt");
 let textToEncryptLabel = document.getElementById("text-to-encrypt-label");
 // let encryptedTextOutput = document.getElementById("encrypted-text");
@@ -136,6 +145,7 @@ let encryptBtn = document.getElementById("encrypt");
 let shiftLength = document.getElementById("shift-length");
 // let shiftLengthError = document.getElementById("shift-length-error");
 let shiftLengthLabel = document.getElementById("shift-length-label");
+let originalTextRow = document.getElementById("original-text-row");
 // let textToEncryptError = document.getElementById("text-to-encrypt-error");
 
 encryptBtn.addEventListener("click", function () {
@@ -157,6 +167,7 @@ shiftLength.addEventListener("input", function () {
 
 textToEncrypt.addEventListener("input", function () {
   CheckTextToAnyLatter(textToEncrypt.value);
+  FillTextRow(originalTextRow, textToEncrypt.value);
 });
 
 // And we need to add graphs with time, safety and iterations

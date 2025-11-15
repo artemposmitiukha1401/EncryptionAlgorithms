@@ -1,11 +1,13 @@
-body{
+body {
     background-color: black;
 }
-*{
+
+* {
     color: white;
     font-family: 'Archivo Narrow';
 }
-h1{
+
+h1 {
     text-transform: uppercase;
     display: flex;
     margin-inline: auto;
@@ -13,19 +15,21 @@ h1{
     font-size: 4rem;
     letter-spacing: 0.5rem;
 }
-table{
+
+table {
     display: flex;
-   
+
     justify-content: center;
 }
 
-tbody{
+tbody {
     display: flex;
     width: 40rem;
     flex-wrap: wrap;
     gap: 1rem;
 }
-td{
+
+td {
     padding: 1rem;
     border: 1px solid white;
     width: 2rem;
@@ -37,19 +41,19 @@ td{
     align-items: center;
 }
 
-td:hover{
+td:hover {
     background-color: white;
     color: black;
     transform: scale(1.1);
     border-radius: 1rem;
-     box-shadow:
-                0 0 5px 2px rgba(255, 255, 255, 0.8),
-                0 0 15px 5px rgba(138, 43, 226, 0.6),
-                0 0 30px 10px rgba(0, 191, 255, 0.4),
-                0 0 50px 15px rgba(0, 150, 255, 0.2);
+    box-shadow:
+        0 0 5px 2px rgba(255, 255, 255, 0.8),
+        0 0 15px 5px rgba(138, 43, 226, 0.6),
+        0 0 30px 10px rgba(0, 191, 255, 0.4),
+        0 0 50px 15px rgba(0, 150, 255, 0.2);
 }
 
-#encryption-data{
+#encryption-data {
     margin-top: 5rem;
     display: flex;
     flex-direction: column;
@@ -58,7 +62,8 @@ td:hover{
     justify-content: center;
     align-items: center;
 }
-input{
+
+input {
     display: flex;
     justify-content: center;
     background-color: black;
@@ -72,16 +77,17 @@ input{
     padding: 1rem;
     font-size: 1.2rem;
 }
-input:focus{
+
+input:focus {
     box-shadow:
-                0 0 5px 2px rgba(255, 255, 255, 0.8),
-                0 0 15px 5px rgba(138, 43, 226, 0.6),
-                0 0 30px 10px rgba(0, 191, 255, 0.4),
-                0 0 50px 15px rgba(0, 150, 255, 0.2);
-    
+        0 0 5px 2px rgba(255, 255, 255, 0.8),
+        0 0 15px 5px rgba(138, 43, 226, 0.6),
+        0 0 30px 10px rgba(0, 191, 255, 0.4),
+        0 0 50px 15px rgba(0, 150, 255, 0.2);
+
 }
 
-#encrypt{
+#encrypt {
     background-color: black;
     border: 1px solid white;
     border-radius: 0.2rem;
@@ -91,7 +97,7 @@ input:focus{
     transition: all 0.2s ease-in-out;
 }
 
-#encrypt:hover{
+#encrypt:hover {
     transform: scale(1.1);
     background-color: white;
     color: black;
@@ -100,26 +106,63 @@ input:focus{
 }
 
 
-p{
+p {
     color: white;
 }
-label{
+
+label {
     font-weight: 900;
     font-size: 1.3rem;
 }
-.error{
+
+.error {
     display: none;
     color: red;
     font-size: 1.3rem;
 }
 
-#encryption-output{
+#encryption-output {
     display: flex;
     margin-top: 5rem;
     justify-content: center;
 }
-#encrypted-text{
+
+#encrypted-text {
     font-size: 5rem;
     letter-spacing: 2rem;
     text-align: center;
+}
+
+.text-row {
+    min-height: 72px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 12px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #131313, #000, #131313)
+}
+
+.text-row p {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 48px;
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 3px 6px 4px rgba(255, 255, 255, 0.301);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: transform .35s cubic-bezier(.2, .9, .2, 1), opacity .28s;
+    background: transparent;
+    color: #fff;
+}
+
+.head-text {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: 700;
 }
