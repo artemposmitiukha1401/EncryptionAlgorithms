@@ -100,7 +100,7 @@
     </table>
 
     <div id="text-box">
-        <p class="head-text">Original text</p>
+        <p class="head-text">Initial Text</p>
         <div id="original-text-row" class="text-row">
         </div>
     </div>
@@ -111,13 +111,15 @@
         <p id="text-to-encrypt-error" class="error"></p>
 
         <label id="shift-length-label" for="shift-length">Enter shift length:</label>
-        <input type="number" name="shift-length" id="shift-length" placeholder="0" value="0">
+        <input type="range" name="shift-length" id="shift-length" placeholder="0"  value="1" min="1" max="25"">
+        <span id="shift-value">0</span>
         <p id="shift-length-error" class="error"></p>
 
         <button id="encrypt">Encrypt</button>
     </div>
 
     <div id="encryption-output">
+        <p class="head-text">Encrypted Text</p>
         <p id="encrypted-text"></p>
     </div>
     <script src="./script.js"></script>

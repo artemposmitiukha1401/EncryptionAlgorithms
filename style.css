@@ -16,9 +16,22 @@ h1 {
     letter-spacing: 0.5rem;
 }
 
+table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+table tbody tr.highlight-red {
+  background-color: rgba(255, 0, 0, 0.6);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+}
+
+table tbody tr.highlight-green {
+  background-color: rgba(0, 255, 0, 0.6);
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+}
+
 table {
     display: flex;
-
     justify-content: center;
 }
 
@@ -124,40 +137,56 @@ label {
 #encryption-output {
     display: flex;
     margin-top: 5rem;
+    gap: 1rem;
     justify-content: center;
+    flex-direction: column;
 }
 
 #encrypted-text {
     font-size: 5rem;
-    letter-spacing: 2rem;
+    letter-spacing: 1rem;   
     text-align: center;
+    text-transform: uppercase;
 }
 
 .text-row {
-    min-height: 72px;
+    
     display: flex;
-    gap: 8px;
+    gap: 0.5rem;
     align-items: center;
     flex-wrap: wrap;
     padding: 12px;
-    border-radius: 12px;
-    background: linear-gradient(180deg, #131313, #000, #131313)
+    height: 5rem;
+    border-radius: 0.2rem;
+    border: 1px solid white;
+    align-items: center;
 }
 
+.text-row p:hover{
+ background-color: white;
+    color: black;
+    transform: scale(1.1);
+    border-radius: 1rem;
+    box-shadow:
+        0 0 5px 2px rgba(255, 255, 255, 0.8),
+        0 0 15px 5px rgba(138, 43, 226, 0.6),
+        0 0 30px 10px rgba(0, 191, 255, 0.4),
+        0 0 50px 15px rgba(0, 150, 255, 0.2);
+}
 .text-row p {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 36px;
+    text-transform: uppercase;
+    font-size: 1.5rem;
     height: 48px;
-    padding: 8px;
-    border-radius: 10px;
-    box-shadow: 3px 6px 4px rgba(255, 255, 255, 0.301);
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    transition: transform .35s cubic-bezier(.2, .9, .2, 1), opacity .28s;
-    background: transparent;
-    color: #fff;
+    margin: 0;
+    padding-inline: 2rem;
+    padding: 1rem;
+    transition: transform 0.2s ease-in-out;
+
+    border-radius: 0.2rem;
+    border: 1px solid white;
 }
 
 .head-text {
