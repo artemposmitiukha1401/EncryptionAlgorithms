@@ -16,112 +16,239 @@
 
 <body>
     <h1>Encryption Algorithms</h1>
-    <table>
-        <tbody>
-            <tr>
-                <td>A</td>
-            </tr>
-            <tr>
-                <td>B</td>
-            </tr>
-            <tr>
-                <td>C</td>
-            </tr>
-            <tr>
-                <td>D</td>
-            </tr>
-            <tr>
-                <td>E</td>
-            </tr>
-            <tr>
-                <td>F</td>
-            </tr>
-            <tr>
-                <td>G</td>
-            </tr>
-            <tr>
-                <td>H</td>
-            </tr>
-            <tr>
-                <td>I</td>
-            </tr>
-            <tr>
-                <td>J</td>
-            </tr>
-            <tr>
-                <td>K</td>
-            </tr>
-            <tr>
-                <td>L</td>
-            </tr>
-            <tr>
-                <td>M</td>
-            </tr>
-            <tr>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>O</td>
-            </tr>
-            <tr>
-                <td>P</td>
-            </tr>
-            <tr>
-                <td>Q</td>
-            </tr>
-            <tr>
-                <td>R</td>
-            </tr>
-            <tr>
-                <td>S</td>
-            </tr>
-            <tr>
-                <td>T</td>
-            </tr>
-            <tr>
-                <td>U</td>
-            </tr>
-            <tr>
-                <td>V</td>
-            </tr>
-            <tr>
-                <td>W</td>
-            </tr>
-            <tr>
-                <td>X</td>
-            </tr>
-            <tr>
-                <td>Y</td>
-            </tr>
-            <tr>
-                <td>Z</td>
-            </tr>
-        </tbody>
-    </table>
+    <section>
+        <div id="controls">
 
-    <div id="text-box">
-        <p class="head-text">Initial Text</p>
-        <div id="original-text-row" class="text-row">
+            <div id="text-box">
+                <p class="head-text">Initial Text</p>
+                <div id="original-text-row" class="text-row">
+                </div>
+            </div>
+
+            <div id="encryption-data">
+                <label id="text-to-encrypt-label" for="text-to-encrypt">Enter text to encrypt:</label>
+                <input type="text" id="text-to-encrypt">
+                <p id="text-to-encrypt-error" class="error"></p>
+
+                <label id="shift-length-label" for="shift-length">Enter shift length:</label>
+                <input type="range" name="shift-length" id="shift-length" placeholder="1" value="1" min="1" max="25"">
+        <span id="shift-value">1</span>
+                <p id="shift-length-error" class="error"></p>
+
+                <button id="encrypt">Encrypt</button>
+                <button id="decrypt">Decrypt</button>
+            </div>
+        </div>
+        </div>
+
+        <div id="output">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>B</td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                    </tr>
+                    <tr>
+                        <td>D</td>
+                    </tr>
+                    <tr>
+                        <td>E</td>
+                    </tr>
+                    <tr>
+                        <td>F</td>
+                    </tr>
+                    <tr>
+                        <td>G</td>
+                    </tr>
+                    <tr>
+                        <td>H</td>
+                    </tr>
+                    <tr>
+                        <td>I</td>
+                    </tr>
+                    <tr>
+                        <td>J</td>
+                    </tr>
+                    <tr>
+                        <td>K</td>
+                    </tr>
+                    <tr>
+                        <td>L</td>
+                    </tr>
+                    <tr>
+                        <td>M</td>
+                    </tr>
+                    <tr>
+                        <td>N</td>
+                    </tr>
+                    <tr>
+                        <td>O</td>
+                    </tr>
+                    <tr>
+                        <td>P</td>
+                    </tr>
+                    <tr>
+                        <td>Q</td>
+                    </tr>
+                    <tr>
+                        <td>R</td>
+                    </tr>
+                    <tr>
+                        <td>S</td>
+                    </tr>
+                    <tr>
+                        <td>T</td>
+                    </tr>
+                    <tr>
+                        <td>U</td>
+                    </tr>
+                    <tr>
+                        <td>V</td>
+                    </tr>
+                    <tr>
+                        <td>W</td>
+                    </tr>
+                    <tr>
+                        <td>X</td>
+                    </tr>
+                    <tr>
+                        <td>Y</td>
+                    </tr>
+                    <tr>
+                        <td>Z</td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+            <div id="encryption-output">
+                <p class="head-text">Encrypted Text</p>
+                <p id="encrypted-text"></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="rot13">
+        <table>
+            <tbody>
+                <tr>
+                    <td>A</td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                </tr>
+                <tr>
+                    <td>D</td>
+                </tr>
+                <tr>
+                    <td>E</td>
+                </tr>
+                <tr>
+                    <td>F</td>
+                </tr>
+                <tr>
+                    <td>G</td>
+                </tr>
+                <tr>
+                    <td>H</td>
+                </tr>
+                <tr>
+                    <td>I</td>
+                </tr>
+                <tr>
+                    <td>J</td>
+                </tr>
+                <tr>
+                    <td>K</td>
+                </tr>
+                <tr>
+                    <td>L</td>
+                </tr>
+                <tr>
+                    <td>M</td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    <td>N</td>
+                </tr>
+                <tr>
+                    <td>O</td>
+                </tr>
+                <tr>
+                    <td>P</td>
+                </tr>
+                <tr>
+                    <td>Q</td>
+                </tr>
+                <tr>
+                    <td>R</td>
+                </tr>
+                <tr>
+                    <td>S</td>
+                </tr>
+                <tr>
+                    <td>T</td>
+                </tr>
+                <tr>
+                    <td>U</td>
+                </tr>
+                <tr>
+                    <td>V</td>
+                </tr>
+                <tr>
+                    <td>W</td>
+                </tr>
+                <tr>
+                    <td>X</td>
+                </tr>
+                <tr>
+                    <td>Y</td>
+                </tr>
+                <tr>
+                    <td>Z</td>
+                </tr>
+            </tbody>
+        </table>
+
+         <div id="controls-rot13">
+
+        <div id="text-box-rot13">
+            <p class="head-text">Initial Text</p>
+            <div id="original-text-row-rot13" class="text-row">
+            </div>
+        </div>
+
+        <div id="encryption-data-rot13">
+            <label id="text-to-encrypt-label-rot13" for="text-to-encrypt-rot13">Enter text to encrypt (ROT13):</label>
+            <input type="text" id="text-to-encrypt-rot13">
+            <p id="text-to-encrypt-error-rot13" class="error"></p>
+
+            <button id="encrypt-rot13">Encrypt</button>
+            <button id="decrypt-rot13">Decrypt</button>
         </div>
     </div>
 
-    <div id="encryption-data">
-        <label id="text-to-encrypt-label" for="text-to-encrypt">Enter text to encrypt:</label>
-        <input type="text" id="text-to-encrypt">
-        <p id="text-to-encrypt-error" class="error"></p>
-
-        <label id="shift-length-label" for="shift-length">Enter shift length:</label>
-        <input type="range" name="shift-length" id="shift-length" placeholder="0"  value="1" min="1" max="25"">
-        <span id="shift-value">0</span>
-        <p id="shift-length-error" class="error"></p>
-
-        <button id="encrypt">Encrypt</button>
+    <div id="output-rot13">
+        <div id="encryption-output-rot13">
+            <p class="head-text">Encrypted Text</p>
+            <p id="encrypted-text-rot13"></p>
+        </div>
     </div>
 
-    <div id="encryption-output">
-        <p class="head-text">Encrypted Text</p>
-        <p id="encrypted-text"></p>
-    </div>
+    </section>
+
+
     <script src="./script.js"></script>
 </body>
 
