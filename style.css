@@ -102,14 +102,6 @@ input {
     font-size: 1.2rem;
 }
 
-input:focus {
-    box-shadow:
-        0 0 5px 2px rgba(255, 255, 255, 0.8),
-        0 0 15px 5px rgba(138, 43, 226, 0.6),
-        0 0 30px 10px rgba(0, 191, 255, 0.4),
-        0 0 50px 15px rgba(0, 150, 255, 0.2);
-    outline: none;
-}
 
 #encrypt,
 #decrypt,
@@ -121,6 +113,8 @@ input:focus {
     padding: 1rem;
     padding-inline: 2rem;
     font-size: 1rem;
+     transform-origin: center;
+    will-change: transform;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 }
@@ -129,11 +123,11 @@ input:focus {
 #decrypt:hover,
 #encrypt-rot13:hover,
 #decrypt-rot13:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
     background-color: white;
     color: black;
+    
     border-radius: 1rem;
-    font-size: 1.3rem;
 }
 
 p {
@@ -163,13 +157,15 @@ label {
 
 #encrypted-text,
 #encrypted-text-rot13 {
-    font-size: clamp(2rem, 4vw, 5rem);
+    font-weight: 900;
+    font-size: 4rem;
     letter-spacing: 0.5rem;
     text-align: center;
     text-transform: uppercase;
     word-break: break-word;
     overflow-wrap: break-word;
     padding: 1rem;
+    margin: 0rem;
 }
 
 .text-row {
@@ -248,8 +244,9 @@ section {
     gap: 4rem;
     flex-wrap: wrap;
     max-width: 1400px;
-    margin: 0 auto;
-    margin-top: 10rem;
+    margin-inline: auto;
+    margin-top: 2rem;
+    
 }
 
 #controls,
@@ -280,6 +277,63 @@ section {
 #shift-value {
     font-size: 1.5rem;
     font-weight: bold;
+}
+h2{
+    display: flex;
+    justify-content: center;
+    margin-inline: auto;
+    font-size: 4rem;
+    margin-top: 5rem;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.algorithm-description{
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    position: absolute;
+    left: 0; 
+    right: 0; 
+    margin-inline: auto; 
+    width: 50rem;
+
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 0.2rem;
+    padding: 1rem;
+    font-size: 2rem;
+    text-align: center;
+}
+
+#caesar-encryption:hover + .algorithm-description:first-of-type{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+#rot13:hover + .algorithm-description:last-of-type{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.buttons{
+    display: flex;
+    gap: 5rem;
+    align-items: center;
+    padding: 1.5rem;
+}
+footer{
+    display: flex;
+    margin-top: 5rem;
+    align-items: center;
+    justify-content: center;
+}
+footer > p{
+    text-align: center;
+    line-height: 2.5rem;
+    font-size: 1.3rem
 }
 
 @media (max-width: 1024px) {

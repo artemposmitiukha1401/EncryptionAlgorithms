@@ -16,6 +16,10 @@
 
 <body>
     <h1>Encryption Algorithms</h1>
+    <h2 id="caesar-encryption">Caesar Encryption</h2>
+    <p class="algorithm-description"><strong>Caesar encryption</strong> is a simple substitution cipher in which each
+        letter in the plaintext is shifted by a fixed number of positions in the alphabet. For example, with a shift of
+        3, A → D, B → E, C → F, and so on. When the end of the alphabet is reached, the shift wraps around.</p>
     <section>
         <div id="controls">
 
@@ -31,12 +35,13 @@
                 <p id="text-to-encrypt-error" class="error"></p>
 
                 <label id="shift-length-label" for="shift-length">Enter shift length:</label>
-                <input type="range" name="shift-length" id="shift-length" placeholder="1" value="1" min="1" max="25"">
-        <span id="shift-value">1</span>
-                <p id="shift-length-error" class="error"></p>
+                <input type="range" name="shift-length" id="shift-length" value="1" min="1" max="25">
+                <span id="shift-value">1</span>
 
-                <button id="encrypt">Encrypt</button>
-                <button id="decrypt">Decrypt</button>
+                <div class="buttons">
+                    <button id="encrypt">Encrypt</button>
+                    <button id="decrypt">Decrypt</button>
+                </div>
             </div>
         </div>
         </div>
@@ -133,7 +138,11 @@
         </div>
     </section>
 
-    <section id="rot13">
+    <h2 id="rot13">ROT13 Encryption</h2>
+    <p class="algorithm-description"><strong>ROT13</strong> is a variant of the Caesar cipher that applies a fixed shift
+        of 13 positions to each letter in the alphabet. Because the English alphabet has 26 letters, applying ROT13
+        twice restores the original text.</p>
+    <section>
         <table>
             <tbody>
                 <tr>
@@ -177,6 +186,7 @@
                 </tr>
             </tbody>
         </table>
+
         <table>
             <tbody>
                 <tr>
@@ -221,34 +231,38 @@
             </tbody>
         </table>
 
-         <div id="controls-rot13">
+        <div id="controls-rot13">
 
-        <div id="text-box-rot13">
-            <p class="head-text">Initial Text</p>
-            <div id="original-text-row-rot13" class="text-row">
+            <div id="text-box-rot13">
+                <p class="head-text">Initial Text</p>
+                <div id="original-text-row-rot13" class="text-row">
+                </div>
+            </div>
+
+            <div id="encryption-data-rot13">
+                <label id="text-to-encrypt-label-rot13" for="text-to-encrypt-rot13">Enter text to encrypt
+                    (ROT13):</label>
+                <input type="text" id="text-to-encrypt-rot13">
+
+
+                <div class="buttons">
+                    <button id="encrypt-rot13">Encrypt</button>
+                    <button id="decrypt-rot13">Decrypt</button>
+                </div>
             </div>
         </div>
 
-        <div id="encryption-data-rot13">
-            <label id="text-to-encrypt-label-rot13" for="text-to-encrypt-rot13">Enter text to encrypt (ROT13):</label>
-            <input type="text" id="text-to-encrypt-rot13">
-            <p id="text-to-encrypt-error-rot13" class="error"></p>
-
-            <button id="encrypt-rot13">Encrypt</button>
-            <button id="decrypt-rot13">Decrypt</button>
+        <div id="output-rot13">
+            <div id="encryption-output-rot13">
+                <p class="head-text">Encrypted Text</p>
+                <p id="encrypted-text-rot13"></p>
+            </div>
         </div>
-    </div>
-
-    <div id="output-rot13">
-        <div id="encryption-output-rot13">
-            <p class="head-text">Encrypted Text</p>
-            <p id="encrypted-text-rot13"></p>
-        </div>
-    </div>
 
     </section>
-
-
+    <footer>
+        <p><strong>Copyright &copy Encryption Algorithms</strong><br>Posmitiukga Artem<br>Paradovskiy Oleksander</p>
+    </footer>
     <script src="./script.js"></script>
 </body>
 
