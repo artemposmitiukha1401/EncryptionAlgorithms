@@ -1,4 +1,22 @@
-async function ROT13Encryption(textToEncrypt, encrypt) {
+const textInput = document.getElementById("text-to-encrypt");
+const textLabel = document.getElementById("text-to-encrypt-label");
+const shiftInput = document.getElementById("shift-length");
+const shiftLabel = document.getElementById("shift-length-label");
+const encryptBtn = document.getElementById("encrypt");
+const decryptBtn = document.getElementById("decrypt");
+const originalTextRow = document.getElementById("original-text-row");
+const encryptedText = document.getElementById("encrypted-text");
+
+const textLabelRot13 = document.getElementById("text-to-encrypt-label-rot13");
+const textInputRot13 = document.getElementById("text-to-encrypt-rot13");
+const encryptBtnRot13 = document.getElementById("encrypt-rot13");
+const decryptBtnRot13 = document.getElementById("decrypt-rot13");
+const originalTextRowRot13 = document.getElementById("original-text-row-rot13");
+const encryptedTextRot13 = document.getElementById("encrypted-text-rot13");
+const textToEncryptErrorRot13 = document.getElementById("text-to-encrypt-error-rot13");
+const shiftValue = document.getElementById("shift-value");
+
+async function ROT13Encryption(textToEncrypt) {
   let result = "";
   const rows = document.querySelectorAll("#rot13 table tr");
 
@@ -65,108 +83,67 @@ async function CaesarEncryption(textToEncrypt, shift, encrypt) {
     }
   }
 }
-
-function ValidateInput() {
-  const text = textInput.value;
-
-  const hasLetters = /[A-Za-z]/i.test(text);
+function ValidateInput(input, label, errorMessage, successMessage) {
+  const text = input.value;
+  const hasLetters = /[A-Za-z]/.test(text);
 
   if (!hasLetters) {
-    SetError(textInput, textLabel, "Text must have some letters!");
+    SetError(input, label, errorMessage);
     return false;
   }
 
-  setSuccess(textInput, textLabel, "Enter text to encrypt:");
+  SetSuccess(input, label, successMessage);
   return true;
 }
-
-function ValidateInputRot13() {
-  const text = textInputRot13.value;
-
-  const hasLetters = /[A-Za-z]/i.test(text);
-
-  if (!hasLetters) {
-    SetError(textInputRot13, textLabelRot13, "Text must have some letters!");
-    return false;
-  }
-
-  setSuccess(textInputRot13, textLabelRot13, "Enter text to encrypt:");
-  return true;
-}
-
 function SetError(input, label, message) {
   label.style.color = "red";
   label.textContent = message;
   input.style.borderColor = "red";
   input.style.boxShadow =
     "0 0 5px 2px rgba(255, 255, 255, 0.8), 0 0 15px 5px rgba(255, 0, 0, 0.6), 0 0 30px 10px rgba(255, 50, 50, 0.4), 0 0 50px 15px rgba(255, 100, 100, 0.2)";
-  encryptBtn.disabled = true;
+
 }
 
-function setSuccess(input, label, message) {
+function SetSuccess(input, label, message) {
   label.style.color = "white";
   label.textContent = message;
   input.style.borderColor = "white";
   input.style.boxShadow =
     "0 0 5px 2px rgba(255, 255, 255, 0.8), 0 0 15px 5px rgba(138, 43, 226, 0.6), 0 0 30px 10px rgba(0, 191, 255, 0.4), 0 0 50px 15px rgba(0, 150, 255, 0.2)";
-  encryptBtn.disabled = false;
-}
 
-function displayText(text) {
-  originalTextRow.innerHTML = "";
+}
+function DisplayText(text, container) {
+  container.innerHTML = "";
   for (let char of text) {
     const p = document.createElement("p");
     p.textContent = char === " " ? "␣" : char;
-    originalTextRow.appendChild(p);
+    container.appendChild(p);
   }
 }
-
-function displayTextRot13(text) {
-  originalTextRowRot13.innerHTML = "";
-  for (let char of text) {
-    const p = document.createElement("p");
-    p.textContent = char === " " ? "␣" : char;
-    originalTextRowRot13.appendChild(p);
-  }
-}
-
-const textInput = document.getElementById("text-to-encrypt");
-const textLabel = document.getElementById("text-to-encrypt-label");
-const shiftInput = document.getElementById("shift-length");
-const shiftLabel = document.getElementById("shift-length-label");
-const encryptBtn = document.getElementById("encrypt");
-const decryptBtn = document.getElementById("decrypt");
-const originalTextRow = document.getElementById("original-text-row");
-const encryptedText = document.getElementById("encrypted-text");
-
-const textLabelRot13 = document.getElementById("text-to-encrypt-label-rot13");
-const textInputRot13 = document.getElementById("text-to-encrypt-rot13");
-const encryptBtnRot13 = document.getElementById("encrypt-rot13");
-const decryptBtnRot13 = document.getElementById("decrypt-rot13");
-const originalTextRowRot13 = document.getElementById("original-text-row-rot13");
-const encryptedTextRot13 = document.getElementById("encrypted-text-rot13");
-const textToEncryptErrorRot13 = document.getElementById("text-to-encrypt-error-rot13");
-const shiftValue = document.getElementById("shift-value");
 
 encryptBtn.addEventListener("click", async function () {
-  if (ValidateInput()) {
-    encryptBtn.disabled = true;
+  await CaesarEncryption(textInput.value, parseInt(shiftInput.value), true);
+  originalTextRow.innerHTML = '';
+  textInput.value = "";
 
-    await CaesarEncryption(textInput.value, parseInt(shiftInput.value), true);
-    originalTextRow.innerHTML = '';
-    textInput.value = "";
-    encryptBtn.disabled = false;
-  }
 });
 
 decryptBtn.addEventListener("click", async function () {
-  if (ValidateInput()) {
-    decryptBtn.disabled = true;
+  await CaesarEncryption(textInput.value, parseInt(shiftInput.value), false);
+  originalTextRow.innerHTML = '';
+  textInput.value = "";
 
-    await CaesarEncryption(textInput.value, parseInt(shiftInput.value), false);
-   
-    encryptBtn.disabled = false;
+});
+textInput.addEventListener("input", function () {
+  if (!ValidateInput(textInput, textLabel, "Text must have some letters!", "Enter text to encrypt:")) {
+    encryptBtn.disabled = true;
+    decryptBtn.disabled = true;
   }
+  else {
+    encryptBtn.disabled = false;
+    decryptBtn.disabled = false;
+  }
+  DisplayText(this.value, originalTextRow);
 });
 document.querySelectorAll("input[type='text']").forEach(input => {
   input.addEventListener("focus", function () {
@@ -183,38 +160,35 @@ document.querySelectorAll("input[type='text']").forEach(input => {
     this.style.outline = "none";
   });
 });
-textInput.addEventListener("input", function () {
-  ValidateInput();
-  displayText(this.value);
-});
+
 
 shiftInput.addEventListener("input", function () {
   shiftValue.textContent = this.value;
 });
-
-encryptBtnRot13.addEventListener("click", function () {
+encryptBtnRot13.addEventListener("click", async function () {
   const text = textInputRot13.value;
-  if (text.trim() === "") {
-    textToEncryptErrorRot13.textContent = "Please enter text";
-    return;
-  }
-  ROT13Encryption(text, true);
+  await ROT13Encryption(text);
   textInputRot13.value = "";
-  originalTextRowRot13.innerHTML = '';
+  originalTextRowRot13.innerHTML = "";
+
 });
 
 decryptBtnRot13.addEventListener("click", function () {
-  const text = encryptedTextRot13.textContent;
-  if (text.trim() === "") {
-    textToEncryptErrorRot13.textContent = "No encrypted text to decrypt";
-    return;
-  }
-  ROT13Encryption(text, true);
+  const text = textInputRot13.value;
+  ROT13Encryption(text);
   textInputRot13.value = "";
-  originalTextRowRot13.innerHTML = '';
+  originalTextRowRot13.innerHTML = "";
 });
 
 textInputRot13.addEventListener("input", function () {
-  ValidateInputRot13();
-  displayTextRot13(this.value);
+  if (!ValidateInput(textInputRot13, textLabelRot13, "Text must have some letters!", "Enter text to encrypt:")) {
+    encryptBtnRot13.disabled = true;
+    decryptBtnRot13.disabled = true;
+  }
+  else {
+    encryptBtnRot13.disabled = false;
+    decryptBtnRot13.disabled = false;
+  }
+
+  DisplayText(this.value, originalTextRowRot13);
 });
