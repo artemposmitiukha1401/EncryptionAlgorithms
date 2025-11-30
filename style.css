@@ -113,7 +113,7 @@ input {
     padding: 1rem;
     padding-inline: 2rem;
     font-size: 1rem;
-     transform-origin: center;
+    transform-origin: center;
     will-change: transform;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
@@ -126,7 +126,7 @@ input {
     transform: scale(1.2);
     background-color: white;
     color: black;
-    
+
     border-radius: 1rem;
 }
 
@@ -246,7 +246,7 @@ section {
     max-width: 1400px;
     margin-inline: auto;
     margin-top: 2rem;
-    
+
 }
 
 #controls,
@@ -278,7 +278,8 @@ section {
     font-size: 1.5rem;
     font-weight: bold;
 }
-h2{
+
+h2 {
     display: flex;
     justify-content: center;
     margin-inline: auto;
@@ -288,17 +289,18 @@ h2{
     cursor: pointer;
 }
 
-.algorithm-description{
+
+.algorithm-description {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-5px);
     pointer-events: none;
     transition: opacity 0.25s ease, transform 0.25s ease;
     position: absolute;
-    left: 0; 
-    right: 0; 
-    margin-inline: auto; 
+    left: 0;
+    right: 0;
+    margin-inline: auto;
     width: 50rem;
-
+        
     background-color: black;
     border: 1px solid white;
     border-radius: 0.2rem;
@@ -307,30 +309,33 @@ h2{
     text-align: center;
 }
 
-#caesar-encryption:hover + .algorithm-description:first-of-type{
+#caesar-encryption:hover+.algorithm-description {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
 }
 
-#rot13:hover + .algorithm-description:last-of-type{
+#rot13-label:hover+.algorithm-description {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
 }
-.buttons{
+
+.buttons {
     display: flex;
     gap: 5rem;
     align-items: center;
     padding: 1.5rem;
 }
-footer{
+
+footer {
     display: flex;
     margin-top: 5rem;
     align-items: center;
     justify-content: center;
 }
-footer > p{
+
+footer>p {
     text-align: center;
     line-height: 2.5rem;
     font-size: 1.3rem

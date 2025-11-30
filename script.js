@@ -1,26 +1,26 @@
 async function ROT13Encryption(textToEncrypt, encrypt) {
   let result = "";
   const rows = document.querySelectorAll("#rot13 table tr");
-  
+
   for (let char of textToEncrypt) {
     if (/[a-z]/i.test(char)) {
       const isUpper = char === char.toUpperCase();
       const code = char.toUpperCase().charCodeAt(0) - 65;
       const newCode = (code + 13) % 26;
-      
+
       rows[code].style.background = "rgba(255, 0, 0, 0.6)";
       rows[code].style.boxShadow = "0 0 10px rgba(255, 0, 0, 0.8)";
       await new Promise(r => setTimeout(r, 250));
       rows[code].style.background = "";
       rows[code].style.boxShadow = "";
-      
+
       rows[newCode].style.background = "rgba(0, 255, 0, 0.6)";
       rows[newCode].style.boxShadow = "0 0 10px rgba(0, 255, 0, 0.8)";
-      
+
       const encrypted = String.fromCharCode(newCode + 65);
       result += isUpper ? encrypted : encrypted.toLowerCase();
       encryptedTextRot13.textContent = result;
-      
+
       await new Promise(r => setTimeout(r, 1000));
       rows[newCode].style.background = "";
       rows[newCode].style.boxShadow = "";
@@ -31,11 +31,13 @@ async function ROT13Encryption(textToEncrypt, encrypt) {
   }
 }
 async function CaesarEncryption(textToEncrypt, shift, encrypt) {
+  originalTextRow.innerHTML = '';
+  textInput.value = "";
   let result = "";
   const rows = document.querySelectorAll("table tr");
   shift = encrypt ? shift : -shift;
- 
-  
+
+
   for (let char of textToEncrypt) {
     if (/[a-z]/i.test(char)) {
       const isUpper = char === char.toUpperCase();
@@ -43,17 +45,17 @@ async function CaesarEncryption(textToEncrypt, shift, encrypt) {
       const newCode = (code + shift + 26) % 26;
       const encrypted = String.fromCharCode(newCode + 65);
       result += isUpper ? encrypted : encrypted.toLowerCase();
-    
+
       rows[code].style.background = "rgba(255, 0, 0, 0.6)";
       rows[code].style.boxShadow = "0 0 10px rgba(255, 0, 0, 0.8)";
       await new Promise((r) => setTimeout(r, 250));
       rows[code].style.background = "";
       rows[code].style.boxShadow = "";
-      
+
       rows[newCode].style.background = "rgba(0, 255, 0, 0.6)";
       rows[newCode].style.boxShadow = "0 0 10px rgba(0, 255, 0, 0.8)";
       encryptedText.textContent = result;
-      
+
       await new Promise((r) => setTimeout(r, 1000));
       rows[newCode].style.background = "";
       rows[newCode].style.boxShadow = "";
@@ -73,7 +75,7 @@ function ValidateInput() {
     SetError(textInput, textLabel, "Text must have some letters!");
     return false;
   }
-  
+
   setSuccess(textInput, textLabel, "Enter text to encrypt:");
   return true;
 }
@@ -87,7 +89,7 @@ function ValidateInputRot13() {
     SetError(textInputRot13, textLabelRot13, "Text must have some letters!");
     return false;
   }
-  
+
   setSuccess(textInputRot13, textLabelRot13, "Enter text to encrypt:");
   return true;
 }
@@ -146,29 +148,28 @@ const encryptedTextRot13 = document.getElementById("encrypted-text-rot13");
 const textToEncryptErrorRot13 = document.getElementById("text-to-encrypt-error-rot13");
 const shiftValue = document.getElementById("shift-value");
 
-encryptBtn.addEventListener("click", async function() {
+encryptBtn.addEventListener("click", async function () {
   if (ValidateInput()) {
     encryptBtn.disabled = true;
-    
+
     await CaesarEncryption(textInput.value, parseInt(shiftInput.value), true);
     originalTextRow.innerHTML = '';
-    textInput.value = "";    
+    textInput.value = "";
     encryptBtn.disabled = false;
   }
 });
 
-decryptBtn.addEventListener("click", async function() {
+decryptBtn.addEventListener("click", async function () {
   if (ValidateInput()) {
     decryptBtn.disabled = true;
 
     await CaesarEncryption(textInput.value, parseInt(shiftInput.value), false);
-    originalTextRow.innerHTML = '';
-    textInput.value = "";    
+   
     encryptBtn.disabled = false;
   }
 });
 document.querySelectorAll("input[type='text']").forEach(input => {
-  input.addEventListener("focus", function() {
+  input.addEventListener("focus", function () {
     this.style.boxShadow = `
       0 0 5px 2px rgba(255, 255, 255, 0.8),
       0 0 15px 5px rgba(138, 43, 226, 0.6),
@@ -176,13 +177,13 @@ document.querySelectorAll("input[type='text']").forEach(input => {
       0 0 50px 15px rgba(0, 150, 255, 0.2)`;
     this.style.outline = "none";
   });
-  
-  input.addEventListener("blur", function() {
+
+  input.addEventListener("blur", function () {
     this.style.boxShadow = "none";
     this.style.outline = "none";
   });
 });
-textInput.addEventListener("input",function () {
+textInput.addEventListener("input", function () {
   ValidateInput();
   displayText(this.value);
 });
@@ -191,29 +192,29 @@ shiftInput.addEventListener("input", function () {
   shiftValue.textContent = this.value;
 });
 
-encryptBtnRot13.addEventListener("click", async function (){
+encryptBtnRot13.addEventListener("click", function () {
   const text = textInputRot13.value;
   if (text.trim() === "") {
     textToEncryptErrorRot13.textContent = "Please enter text";
     return;
   }
-  await ROT13Encryption(text, true);
+  ROT13Encryption(text, true);
   textInputRot13.value = "";
   originalTextRowRot13.innerHTML = '';
 });
 
-decryptBtnRot13.addEventListener("click", async function(){
+decryptBtnRot13.addEventListener("click", function () {
   const text = encryptedTextRot13.textContent;
   if (text.trim() === "") {
     textToEncryptErrorRot13.textContent = "No encrypted text to decrypt";
     return;
   }
-  ROT13Encryption(text, true); 
+  ROT13Encryption(text, true);
   textInputRot13.value = "";
   originalTextRowRot13.innerHTML = '';
 });
 
-textInputRot13.addEventListener("input", function() {
+textInputRot13.addEventListener("input", function () {
   ValidateInputRot13();
   displayTextRot13(this.value);
 });
