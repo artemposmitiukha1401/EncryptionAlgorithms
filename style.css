@@ -3,12 +3,24 @@ body {
     margin: 0;
     padding: 20px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
 }
 
 * {
     color: white;
     font-family: 'Archivo Narrow';
     box-sizing: border-box;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    position: relative;
 }
 
 h1 {
@@ -379,4 +391,14 @@ footer>p {
         width: 1.5rem;
         padding: 0.8rem;
     }
+}
+
+#resultAnalistic {
+    display: none;
+    width: 40%;
+    min-width: 400px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    height: fit-content;
 }

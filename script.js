@@ -13,8 +13,65 @@ const encryptBtnRot13 = document.getElementById("encrypt-rot13");
 const decryptBtnRot13 = document.getElementById("decrypt-rot13");
 const originalTextRowRot13 = document.getElementById("original-text-row-rot13");
 const encryptedTextRot13 = document.getElementById("encrypted-text-rot13");
-const textToEncryptErrorRot13 = document.getElementById("text-to-encrypt-error-rot13");
+const textToEncryptErrorRot13 = document.getElementById(
+  "text-to-encrypt-error-rot13"
+);
+
+const resWind = document.querySelector("#resultAnalistic");
 const shiftValue = document.getElementById("shift-value");
+
+const time = document.getElementById("timeAnalistic").getContext("2d");
+const timeToCharAnalistic = document
+  .getElementById("timeToCharAnalistic")
+  .getContext("2d");
+
+const chartTime = new Chart(time, {
+  type: "bar",
+  data: {
+    labels: ["Ceasar", "ROT13"],
+    datasets: [
+      { label: "Caesar time", data: [] },
+      { label: "ROT13 time", data: [] },
+    ],
+  },
+  options: {
+    responsive: true,
+    animation: false,
+    scales: {
+      y: {
+        title: { display: true, text: "Time spent (ms)" },
+        min: 0,
+      },
+    },
+    plugins: {
+      title: { display: true, text: "Time to finish" },
+    },
+  },
+});
+
+const chartCharTime = new Chart(timeToCharAnalistic, {
+  type: "bar",
+  data: {
+    labels: ["Ceasar", "ROT13"],
+    datasets: [
+      { label: "Caesar time", data: [] },
+      { label: "ROT13 time", data: [] },
+    ],
+  },
+  options: {
+    responsive: true,
+    animation: false,
+    scales: {
+      y: {
+        title: { display: true, text: "Time spent (ms)" },
+        min: 0,
+      },
+    },
+    plugins: {
+      title: { display: true, text: "Time spent on 1 char" },
+    },
+  },
+});
 
 function ComputeAnalytics(inputText, outputText, durationMs) {
   const totalChars = inputText.length;
@@ -24,19 +81,16 @@ function ComputeAnalytics(inputText, outputText, durationMs) {
   let nonLettersPreserved = 0;
   const freq = {};
 
-  const isLetter = ch => /[a-z]/i.test(ch);
-
+  const isLetter = (ch) => /[a-z]/i.test(ch);
 
   for (const ch of inputText)
     isLetter(ch) ? lettersEncrypted++ : nonLettersPreserved++;
-
 
   for (const ch of outputText) {
     if (!isLetter(ch)) continue;
     const up = ch.toUpperCase();
     freq[up] = (freq[up] || 0) + 1;
   }
-
 
   const mostCommonLetters = Object.entries(freq)
     .sort(([, countA], [, countB]) => countB - countA)
@@ -51,15 +105,18 @@ function ComputeAnalytics(inputText, outputText, durationMs) {
     bytes,
     lettersEncrypted,
     nonLettersPreserved,
-    mostCommonLetters
+    mostCommonLetters,
   };
 }
 
-function PrintAnalytics(inputText, outputText, durationMs) {
+function PrintAnalytics(scriptId, inputText, outputText, durationMs) {
   const analyticsStats = ComputeAnalytics(inputText, outputText, durationMs);
 
   let mc;
-  if (!analyticsStats.lettersEncrypted || analyticsStats.mostCommonLetters.length === 0) {
+  if (
+    !analyticsStats.lettersEncrypted ||
+    analyticsStats.mostCommonLetters.length === 0
+  ) {
     mc = "Invalid value";
   } else {
     mc = "";
@@ -72,14 +129,30 @@ function PrintAnalytics(inputText, outputText, durationMs) {
     mc = mc.trim();
   }
 
+  chartTime.data.datasets[scriptId].data.push(
+    analyticsStats.durationMs.toFixed(2)
+  );
+  chartCharTime.data.datasets[scriptId].data.push(
+    Math.round(analyticsStats.speed)
+  );
+
+  chartTime.update();
+  chartCharTime.update();
+
   console.log(
     `• Performance Duration: ${analyticsStats.durationMs.toFixed(2)}ms` +
-    ` || Speed: ${Math.round(analyticsStats.speed)} chars/sec | M Data\n` +
-    `Metrics Input: ${analyticsStats.totalChars} chars (${analyticsStats.bytes} bytes)` +
-    ` | Letters encrypted: ${analyticsStats.lettersEncrypted}` +
-    ` | Non-letters preserved: ${analyticsStats.nonLettersPreserved}` +
-    ` | Most Common Letters | ${mc}`
+      ` || Speed: ${Math.round(analyticsStats.speed)} chars/sec | M Data\n` +
+      `Metrics Input: ${analyticsStats.totalChars} chars (${analyticsStats.bytes} bytes)` +
+      ` | Letters encrypted: ${analyticsStats.lettersEncrypted}` +
+      ` | Non-letters preserved: ${analyticsStats.nonLettersPreserved}` +
+      ` | Most Common Letters | ${mc}`
   );
+  resWind.style.display = "block";
+  document.addEventListener("click", (e) => {
+    if (!resWind.contains(e.target)) {
+      resWind.style.display = "none";
+    }
+  });
 }
 async function ROT13Encryption(textToEncrypt) {
   let result = "";
@@ -93,7 +166,7 @@ async function ROT13Encryption(textToEncrypt) {
 
       rows[code].style.background = "rgba(255, 0, 0, 0.6)";
       rows[code].style.boxShadow = "0 0 10px rgba(255, 0, 0, 0.8)";
-      await new Promise(r => setTimeout(r, 250));
+      await new Promise((r) => setTimeout(r, 250));
       rows[code].style.background = "";
       rows[code].style.boxShadow = "";
 
@@ -104,7 +177,7 @@ async function ROT13Encryption(textToEncrypt) {
       result += isUpper ? encrypted : encrypted.toLowerCase();
       encryptedTextRot13.textContent = result;
 
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise((r) => setTimeout(r, 1000));
       rows[newCode].style.background = "";
       rows[newCode].style.boxShadow = "";
     } else {
@@ -115,12 +188,11 @@ async function ROT13Encryption(textToEncrypt) {
   return result;
 }
 async function CaesarEncryption(textToEncrypt, shift, encrypt) {
-  originalTextRow.innerHTML = '';
+  originalTextRow.innerHTML = "";
   textInput.value = "";
   let result = "";
   const rows = document.querySelectorAll("table tr");
   shift = encrypt ? shift : -shift;
-
 
   for (let char of textToEncrypt) {
     if (/[a-z]/i.test(char)) {
@@ -168,7 +240,6 @@ function SetError(input, label, message) {
   input.style.borderColor = "red";
   input.style.boxShadow =
     "0 0 5px 2px rgba(255, 255, 255, 0.8), 0 0 15px 5px rgba(255, 0, 0, 0.6), 0 0 30px 10px rgba(255, 50, 50, 0.4), 0 0 50px 15px rgba(255, 100, 100, 0.2)";
-
 }
 
 function SetSuccess(input, label, message) {
@@ -177,7 +248,6 @@ function SetSuccess(input, label, message) {
   input.style.borderColor = "white";
   input.style.boxShadow =
     "0 0 5px 2px rgba(255, 255, 255, 0.8), 0 0 15px 5px rgba(138, 43, 226, 0.6), 0 0 30px 10px rgba(0, 191, 255, 0.4), 0 0 50px 15px rgba(0, 150, 255, 0.2)";
-
 }
 function DisplayText(text, container) {
   container.innerHTML = "";
@@ -195,9 +265,9 @@ encryptBtn.addEventListener("click", async function () {
   const result = await CaesarEncryption(inputText, shift, true);
   const end = performance.now();
 
-  PrintAnalytics(inputText, result, end - start);
+  PrintAnalytics(0, inputText, result, end - start);
 
-  originalTextRow.innerHTML = '';
+  originalTextRow.innerHTML = "";
   textInput.value = "";
 });
 decryptBtn.addEventListener("click", async function () {
@@ -208,24 +278,30 @@ decryptBtn.addEventListener("click", async function () {
   const result = await CaesarEncryption(inputText, shift, false);
   const end = performance.now();
 
-  PrintAnalytics(inputText, result, end - start);
+  PrintAnalytics(0, inputText, result, end - start);
 
-  originalTextRow.innerHTML = '';
+  originalTextRow.innerHTML = "";
   textInput.value = "";
 });
 
 textInput.addEventListener("input", function () {
-  if (!ValidateInput(textInput, textLabel, "Text must have some letters!", "Enter text to encrypt:")) {
+  if (
+    !ValidateInput(
+      textInput,
+      textLabel,
+      "Text must have some letters!",
+      "Enter text to encrypt:"
+    )
+  ) {
     encryptBtn.disabled = true;
     decryptBtn.disabled = true;
-  }
-  else {
+  } else {
     encryptBtn.disabled = false;
     decryptBtn.disabled = false;
   }
   DisplayText(this.value, originalTextRow);
 });
-document.querySelectorAll("input[type='text']").forEach(input => {
+document.querySelectorAll("input[type='text']").forEach((input) => {
   input.addEventListener("focus", function () {
     this.style.boxShadow = `
       0 0 5px 2px rgba(255, 255, 255, 0.8),
@@ -241,7 +317,6 @@ document.querySelectorAll("input[type='text']").forEach(input => {
   });
 });
 
-
 shiftInput.addEventListener("input", function () {
   shiftValue.textContent = this.value;
 });
@@ -252,7 +327,7 @@ encryptBtnRot13.addEventListener("click", async function () {
   const result = await ROT13Encryption(inputText);
   const end = performance.now();
 
-  PrintAnalytics(inputText, result, end - start);
+  PrintAnalytics(1, inputText, result, end - start);
 
   textInputRot13.value = "";
   originalTextRowRot13.innerHTML = "";
@@ -265,18 +340,24 @@ decryptBtnRot13.addEventListener("click", async function () {
   const result = await ROT13Encryption(inputText);
   const end = performance.now();
 
-  PrintAnalytics(inputText, result, end - start);
+  PrintAnalytics(1, inputText, result, end - start);
 
   textInputRot13.value = "";
   originalTextRowRot13.innerHTML = "";
 });
 
 textInputRot13.addEventListener("input", function () {
-  if (!ValidateInput(textInputRot13, textLabelRot13, "Text must have some letters!", "Enter text to encrypt:")) {
+  if (
+    !ValidateInput(
+      textInputRot13,
+      textLabelRot13,
+      "Text must have some letters!",
+      "Enter text to encrypt:"
+    )
+  ) {
     encryptBtnRot13.disabled = true;
     decryptBtnRot13.disabled = true;
-  }
-  else {
+  } else {
     encryptBtnRot13.disabled = false;
     decryptBtnRot13.disabled = false;
   }
