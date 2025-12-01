@@ -16,6 +16,71 @@ const encryptedTextRot13 = document.getElementById("encrypted-text-rot13");
 const textToEncryptErrorRot13 = document.getElementById("text-to-encrypt-error-rot13");
 const shiftValue = document.getElementById("shift-value");
 
+function ComputeAnalytics(inputText, outputText, durationMs) {
+  const totalChars = inputText.length;
+  const bytes = totalChars * 2;
+
+  let lettersEncrypted = 0;
+  let nonLettersPreserved = 0;
+  const freq = {};
+
+  const isLetter = ch => /[a-z]/i.test(ch);
+
+
+  for (const ch of inputText)
+    isLetter(ch) ? lettersEncrypted++ : nonLettersPreserved++;
+
+
+  for (const ch of outputText) {
+    if (!isLetter(ch)) continue;
+    const up = ch.toUpperCase();
+    freq[up] = (freq[up] || 0) + 1;
+  }
+
+
+  const mostCommonLetters = Object.entries(freq)
+    .sort(([, countA], [, countB]) => countB - countA)
+    .slice(0, 3);
+
+  const speed = durationMs > 0 ? totalChars / (durationMs / 1000) : 0;
+
+  return {
+    durationMs,
+    speed,
+    totalChars,
+    bytes,
+    lettersEncrypted,
+    nonLettersPreserved,
+    mostCommonLetters
+  };
+}
+
+function PrintAnalytics(inputText, outputText, durationMs) {
+  const analyticsStats = ComputeAnalytics(inputText, outputText, durationMs);
+
+  let mc;
+  if (!analyticsStats.lettersEncrypted || analyticsStats.mostCommonLetters.length === 0) {
+    mc = "Invalid value";
+  } else {
+    mc = "";
+    for (const item of analyticsStats.mostCommonLetters) {
+      const letter = item[0];
+      const count = item[1];
+      const valueToPercentage = (count / analyticsStats.lettersEncrypted) * 100;
+      mc += `${letter}: ${count} (${valueToPercentage.toFixed(1)}%)  `;
+    }
+    mc = mc.trim();
+  }
+
+  console.log(
+    `• Performance Duration: ${analyticsStats.durationMs.toFixed(2)}ms` +
+    ` || Speed: ${Math.round(analyticsStats.speed)} chars/sec | M Data\n` +
+    `Metrics Input: ${analyticsStats.totalChars} chars (${analyticsStats.bytes} bytes)` +
+    ` | Letters encrypted: ${analyticsStats.lettersEncrypted}` +
+    ` | Non-letters preserved: ${analyticsStats.nonLettersPreserved}` +
+    ` | Most Common Letters | ${mc}`
+  );
+}
 async function ROT13Encryption(textToEncrypt) {
   let result = "";
   const rows = document.querySelectorAll("#rot13 table tr");
@@ -47,6 +112,7 @@ async function ROT13Encryption(textToEncrypt) {
       encryptedTextRot13.textContent = result;
     }
   }
+  return result;
 }
 async function CaesarEncryption(textToEncrypt, shift, encrypt) {
   originalTextRow.innerHTML = '';
@@ -82,6 +148,7 @@ async function CaesarEncryption(textToEncrypt, shift, encrypt) {
       encryptedText.textContent = result;
     }
   }
+  return result;
 }
 function ValidateInput(input, label, errorMessage, successMessage) {
   const text = input.value;
@@ -120,20 +187,33 @@ function DisplayText(text, container) {
     container.appendChild(p);
   }
 }
-
 encryptBtn.addEventListener("click", async function () {
-  await CaesarEncryption(textInput.value, parseInt(shiftInput.value), true);
+  const inputText = textInput.value;
+  const shift = parseInt(shiftInput.value);
+
+  const start = performance.now();
+  const result = await CaesarEncryption(inputText, shift, true);
+  const end = performance.now();
+
+  PrintAnalytics(inputText, result, end - start);
+
   originalTextRow.innerHTML = '';
   textInput.value = "";
-
 });
-
 decryptBtn.addEventListener("click", async function () {
-  await CaesarEncryption(textInput.value, parseInt(shiftInput.value), false);
+  const inputText = textInput.value;
+  const shift = parseInt(shiftInput.value);
+
+  const start = performance.now();
+  const result = await CaesarEncryption(inputText, shift, false);
+  const end = performance.now();
+
+  PrintAnalytics(inputText, result, end - start);
+
   originalTextRow.innerHTML = '';
   textInput.value = "";
-
 });
+
 textInput.addEventListener("input", function () {
   if (!ValidateInput(textInput, textLabel, "Text must have some letters!", "Enter text to encrypt:")) {
     encryptBtn.disabled = true;
@@ -166,16 +246,27 @@ shiftInput.addEventListener("input", function () {
   shiftValue.textContent = this.value;
 });
 encryptBtnRot13.addEventListener("click", async function () {
-  const text = textInputRot13.value;
-  await ROT13Encryption(text);
+  const inputText = textInputRot13.value;
+
+  const start = performance.now();
+  const result = await ROT13Encryption(inputText);
+  const end = performance.now();
+
+  PrintAnalytics(inputText, result, end - start);
+
   textInputRot13.value = "";
   originalTextRowRot13.innerHTML = "";
-
 });
 
-decryptBtnRot13.addEventListener("click", function () {
-  const text = textInputRot13.value;
-  ROT13Encryption(text);
+decryptBtnRot13.addEventListener("click", async function () {
+  const inputText = textInputRot13.value;
+
+  const start = performance.now();
+  const result = await ROT13Encryption(inputText);
+  const end = performance.now();
+
+  PrintAnalytics(inputText, result, end - start);
+
   textInputRot13.value = "";
   originalTextRowRot13.innerHTML = "";
 });
