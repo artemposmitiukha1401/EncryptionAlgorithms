@@ -301,38 +301,6 @@ h2 {
     cursor: pointer;
 }
 
-
-.algorithm-description {
-    opacity: 0;
-    transform: translateY(-5px);
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin-inline: auto;
-    width: 50rem;
-
-    background-color: black;
-    border: 1px solid white;
-    border-radius: 0.2rem;
-    padding: 1rem;
-    font-size: 2rem;
-    text-align: center;
-}
-
-#caesar-encryption:hover+.algorithm-description {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-#rot13-label:hover+.algorithm-description {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
 .buttons {
     display: flex;
     gap: 5rem;
@@ -351,6 +319,22 @@ footer>p {
     text-align: center;
     line-height: 2.5rem;
     font-size: 1.3rem
+}
+#analytics-sidebar {
+    position: fixed;
+    top: 0;
+    left: 10px;
+    width: 360px;
+    height: 100vh;
+    background: black;
+    border: 1px solid white;
+    border-radius: 0.2rem;
+    color: white;
+    overflow-y: auto;    
+    z-index: 9999;
+    padding: 20px;
+    padding-right: 40px;
+    
 }
 
 @media (max-width: 1024px) {

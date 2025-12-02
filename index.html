@@ -16,21 +16,65 @@
 
 <body>
     <main>
-        <section id="resultAnalistic">
-            <canvas id="timeAnalistic">
 
-            </canvas>
-            <canvas id="timeToCharAnalistic"></canvas>
-        </section>
+        <aside id="analytics-sidebar" class="analytics-sidebar">
+            <h2>Analytics</h2>
+
+            <div class="analytics-content">
+                <section class="charts-section">
+                    <h3>Time to Finish</h3>
+                    <canvas id="timeAnalistic"></canvas>
+
+                    <h3>Processing Speed</h3>
+                    <canvas id="timeToCharAnalistic"></canvas>
+                </section>
+
+                <section class="stats-section">
+                    <h3>Run History</h3>
+                    <div id="stats-container" class="stats-list">
+                        <template id="stat-entry-template">
+                            <div class="stat-entry">
+                                <h3 class="data-title">Algorithm - Run</h3>
+                                <div class="stat-grid">
+                                    <div class="stat-item">
+                                        <span class="stat-label">Duration:</span>
+                                        <span class="stat-value data-duration">0 ms</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Speed:</span>
+                                        <span class="stat-value data-speed">0 chars/sec</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Total Characters:</span>
+                                        <span class="stat-value data-total">0</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Size:</span>
+                                        <span class="stat-value data-size">0 bytes</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Letters Encrypted:</span>
+                                        <span class="stat-value data-letters">0</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Non-letters Preserved:</span>
+                                        <span class="stat-value data-non-letters">0</span>
+                                    </div>
+                                </div>
+                                <div class="stat-item full-width">
+                                    <span class="stat-label">Most Common Letters:</span>
+                                    <div class="letter-stats data-common-letters"></div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </section>
+            </div>
+        </aside>
+
         <section id="encryptsSect">
             <h1>Encryption Algorithms</h1>
             <h2 id="caesar-encryption">Caesar Encryption</h2>
-            <p class="algorithm-description"><strong>Caesar encryption</strong> is a simple substitution cipher in which
-                each
-                letter in the plaintext is shifted by a fixed number of positions in the alphabet. For example, with a
-                shift
-                of
-                3, A → D, B → E, C → F, and so on. When the end of the alphabet is reached, the shift wraps around.</p>
             <section>
                 <div id="controls">
 
@@ -54,7 +98,7 @@
                             <button id="decrypt">Decrypt</button>
                         </div>
                     </div>
-                </div>
+
                 </div>
 
                 <div id="output">
@@ -150,12 +194,7 @@
             </section>
 
             <h2 id="rot13-label">ROT13 Encryption</h2>
-            <p class="algorithm-description"><strong>ROT13</strong> is a variant of the Caesar cipher that applies a
-                fixed
-                shift
-                of 13 positions to each letter in the alphabet. Because the English alphabet has 26 letters, applying
-                ROT13
-                twice restores the origanal text.</p>
+
             <section id="rot13">
                 <div id="controls-rot13">
 
